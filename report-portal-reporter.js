@@ -44,6 +44,7 @@ function RPReporter(runner, options) {
     }
 
     rpClient = new RPClient(config);
+    let description = config.description || "";
 
     runner.on('start', function()  {
         if(!rpClient) {
@@ -54,14 +55,14 @@ function RPReporter(runner, options) {
         let lunch = rpClient.startLaunch({
             name: config.launch,
             start_time: rpClient.helpers.now(),
-            description: "Demo lunch for integration",
+            description: description,
             tags: []
         });
 
         launchId = lunch.tempId;
 
         lunch.promise.catch((err) => {
-            console.error(JSON.stringify(err));
+            console.error(`LUNCH Start ${suite.title}: Error ${JSON.stringify(err)}`);
         });
     });
 
@@ -69,7 +70,7 @@ function RPReporter(runner, options) {
         rpClient.finishLaunch(launchId, {
             end_time: rpClient.helpers.now()
         }).promise.catch((err) => {
-            console.error(JSON.stringify(err));
+            console.error(`LUNCH End ${suite.title}: Error ${JSON.stringify(err)}`);
         });
     });
 
@@ -84,6 +85,9 @@ function RPReporter(runner, options) {
             }, launchId,  _.findWhere(suiteIds, {title: suite.parent.title}).id);
 
             suiteIds.push({id: childObj.tempId, title: suite.title});
+            childObj.promise.catch((err) => {
+                console.error(`SUITE Started ${suite.title}: Error ${JSON.stringify(err)}`);
+            });
         } else {
             
             let suiteObj = rpClient.startTestItem({
@@ -93,7 +97,9 @@ function RPReporter(runner, options) {
             }, launchId);
 
             suiteIds.push({id: suiteObj.tempId, title: suite.title});
-            console.log(JSON.stringify(suiteIds));
+            suiteObj.promise.catch((err) => {
+                console.error(`SUITE Started ${suite.title}: Error ${JSON.stringify(err)}`);
+            });
         }
     });
 
@@ -110,7 +116,7 @@ function RPReporter(runner, options) {
                 status: (failedItems.length > 0 ? RP_STATUS.FAILED : RP_STATUS.PASSED),
                 end_time: rpClient.helpers.now()
             }).promise.catch((err) => {
-                console.log(JSON.stringify(err));
+                console.error(`SUITE End ${suite.title}: Error ${JSON.stringify(err)}`);
             });
         }
 
@@ -127,28 +133,42 @@ function RPReporter(runner, options) {
         testIds.push({id: testObj.tempId, title: test.title});
 
         testObj.promise.catch((err) => {
-            console.log(JSON.stringify(err));
+            console.error(`TEST Started ${test.title}: Error ${JSON.stringify(err)}`);
         });
     });
 
     runner.on('pending', function (test) {
-        rpClient.finishTestItem(_.findWhere(testIds, {title: test.title}).id, {
-            status: RP_STATUS.SKIPPED,
-            end_time: rpClient.helpers.now()
-        }).promise.catch((err) => {
-            console.log(JSON.stringify(err));
+        let testObj = rpClient.startTestItem({
+            name: test.title,
+            start_time: rpClient.helpers.now(),
+            tags: [],
+            type: RP_ITEM_TYPE.TEST
+        }, launchId, _.findWhere(suiteIds, {title: test.parent.title}).id);
+
+        testIds.push({id: testObj.tempId, title: test.title});
+
+        testObj.promise.catch((err) => {
+            console.error(`TEST Started ${test.title}: Error ${JSON.stringify(err)}`);
         });
     });
 
     runner.on('test end', function(test){
         let item = testIds.pop();
-        console.log(JSON.stringify(item));
-        rpClient.finishTestItem(item.id, {
-            status: test.state,
-            end_time: rpClient.helpers.now()
-        }).promise.catch((err) => {
-            console.log(JSON.stringify(err));
-        });        
+        if(test.pending === true) {
+            rpClient.finishTestItem(item.id, {
+                status: RP_STATUS.SKIPPED,
+                end_time: rpClient.helpers.now()
+            }).promise.catch((err) => {
+                console.error(`TEST End ${test.title}: Error ${JSON.stringify(err)}`);
+            });
+        } else {
+            rpClient.finishTestItem(item.id, {
+                status: test.state,
+                end_time: rpClient.helpers.now()
+            }).promise.catch((err) => {
+                console.error(`TEST End ${test.title}: Error ${JSON.stringify(err)}`);
+            });        
+        } 
     });
 
     runner.on('fail', (test, err) => {
@@ -157,6 +177,8 @@ function RPReporter(runner, options) {
                 level: RP_LEVEL.FAILED,
                 message: err.message,
                 time: rpClient.helpers.now()
+            }).promise.catch((err) => {
+                console.error(`TEST Fail ${test.title}: Error ${JSON.stringify(err)}`);
             });
         }
     });

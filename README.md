@@ -23,6 +23,7 @@ let mochaMain = new Mocha({
             endpoint: "EPAM report portal api url",
             launch: "execution name",
             project: "project name",
+            description: "Lunch description(optional)",
             tags: [
                 "tag1", "tag2"
             ]
@@ -39,6 +40,7 @@ let mochaMain = new Mocha({
   "token": "UNIVERSALLY UNIQUE IDENTIFIER",
   "launch": "execution name",
   "project": "project name",
+  "description": "Lunch description(optional)",
   "tags": [
     "tag1", "tag2"
   ]
