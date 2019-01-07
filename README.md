@@ -19,9 +19,8 @@ let mochaMain = new Mocha({
     reporterOptions: {
         configFile: "path to config.json",
         configOptions: {
+            token: "UNIVERSALLY UNIQUE IDENTIFIER",
             endpoint: "EPAM report portal api url",
-            username: "user",
-            password: "password",
             launch: "execution name",
             project: "project name",
             tags: [
@@ -37,8 +36,7 @@ let mochaMain = new Mocha({
 ```json
 {
   "endpoint": "EPAM report portal api url",
-  "username": "user",
-  "password": "password",
+  "token": "UNIVERSALLY UNIQUE IDENTIFIER",
   "launch": "execution name",
   "project": "project name",
   "tags": [
