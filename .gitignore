@@ -26,6 +26,9 @@ coverage
 # Bower dependency directory (https://bower.io/)
 bower_components
 
+# Visual Studio Code setting
+.vscode/
+
 # node-waf configuration
 .lock-wscript
 

@@ -1,0 +1,31 @@
+{
+  "name": "report-portal-reporter",
+  "version": "1.0.0",
+  "description": "mocha reporter for EPAM Report Portal",
+  "main": "report-portal-reporter.js",
+  "scripts": {
+    "test": "node ./test/main.js"
+  },
+  "author": "Yuriy Oprysk(yuriy.oprysk@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "reportportal-client": "^5.1.0",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forward1387/report-portal-reporter.git"
+  },
+  "keywords": [
+    "epam",
+    "reports",
+    "portal",
+    "mocha",
+    "reporters",
+    "reportportal"
+  ]
+}
