@@ -8,12 +8,8 @@ let mochaMain = new Mocha({
             token: "",
             endpoint: "",
             launch: "",
-            project: "",
-            tags: [
-                ""
-            ]
-        },
-        configFile: "reportportal.json"
+            project: ""
+        }
     }
 });
 

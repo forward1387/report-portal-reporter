@@ -29,6 +29,12 @@ const RP_ITEM_TYPE = {
     STEP: 'STEP'
 };
 
+let cutStringLength = (str, length) => {
+    return str.length > length ? 
+    str.substring(0, length - 3) + "..." : 
+    str;
+};
+
 function RPReporter(runner, options) {
     mocha.reporters.Base.call(this, runner);
 
@@ -53,7 +59,7 @@ function RPReporter(runner, options) {
         }
 
         let lunch = rpClient.startLaunch({
-            name: config.launch,
+            name: cutStringLength(config.launch, 256),
             start_time: rpClient.helpers.now(),
             description: description,
             tags: []
@@ -79,7 +85,7 @@ function RPReporter(runner, options) {
             return true;
         } if(suite.parent.title !== "") {
             let childObj = rpClient.startTestItem({
-                name: suite.title,
+                name: cutStringLength(suite.title, 256),
                 start_time: rpClient.helpers.now(),
                 type: RP_ITEM_TYPE.SUITE
             }, launchId,  _.findWhere(suiteIds, {title: suite.parent.title}).id);
@@ -91,7 +97,7 @@ function RPReporter(runner, options) {
         } else {
             
             let suiteObj = rpClient.startTestItem({
-                name: suite.title,
+                name: cutStringLength(suite.title, 256),
                 start_time: rpClient.helpers.now(),
                 type: RP_ITEM_TYPE.SUITE
             }, launchId);
@@ -124,7 +130,7 @@ function RPReporter(runner, options) {
     
     runner.on('test', function(test) {
         let testObj = rpClient.startTestItem({
-            name: test.title,
+            name: cutStringLength(test.title, 256),
             start_time: rpClient.helpers.now(),
             tags: [],
             type: RP_ITEM_TYPE.TEST
@@ -139,7 +145,7 @@ function RPReporter(runner, options) {
 
     runner.on('pending', function (test) {
         let testObj = rpClient.startTestItem({
-            name: test.title,
+            name: cutStringLength(test.title, 256),
             start_time: rpClient.helpers.now(),
             tags: [],
             type: RP_ITEM_TYPE.TEST
