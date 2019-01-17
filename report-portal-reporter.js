@@ -44,7 +44,17 @@ function RPReporter(runner, options) {
     let rpClient;
 
     try {
-        config = options.reporterOptions.configOptions ? options.reporterOptions.configOptions : require(path.join(process.cwd(), options.reporterOptions.configFile));
+        if (options.reporterOptions.configFile) {
+            config = options.reporterOptions.configOptions ? options.reporterOptions.configOptions : require(path.join(process.cwd(), options.reporterOptions.configFile));
+        } else {
+            config = {
+                token: options.reporterOptions.token,
+                endpoint: options.reporterOptions.endpoint,
+                launch: options.reporterOptions.launch,
+                project: options.reporterOptions.project,
+                tags: (options.reporterOptions.tags || '').split(' ')
+            }
+        }
     } catch (err) {
         console.error(`Failed to load config. Error: ${err}`);
     }
@@ -62,7 +72,7 @@ function RPReporter(runner, options) {
             name: cutStringLength(config.launch, 256),
             start_time: rpClient.helpers.now(),
             description: description,
-            tags: []
+            tags: config.tags
         });
 
         launchId = lunch.tempId;

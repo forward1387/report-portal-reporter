@@ -4,12 +4,10 @@ const Mocha = require("mocha");
 let mochaMain = new Mocha({
     reporter: 'report-portal-reporter',
     reporterOptions: {
-        configOptions: {
-            token: "",
-            endpoint: "",
-            launch: "",
-            project: ""
-        }
+        token: "",
+        endpoint: "",
+        launch: "",
+        project: ""
     }
 });
 

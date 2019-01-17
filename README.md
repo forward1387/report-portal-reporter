@@ -18,19 +18,24 @@ let mochaMain = new Mocha({
     reporter: 'mocha-rp-reporter',
     reporterOptions: {
         configFile: "path to config.json",
-        configOptions: {
-            token: "UNIVERSALLY UNIQUE IDENTIFIER",
-            endpoint: "EPAM report portal api url",
-            launch: "execution name",
-            project: "project name",
-            description: "Lunch description(optional)",
-            tags: [
-                "tag1", "tag2"
-            ]
-        }                        
-    }
+            }
 });
 ```
+OR
+```
+const Mocha = require("mocha");
+let mochaMain = new Mocha({    
+    reporter: 'mocha-rp-reporter',
+    reporterOptions: {
+        token: "UNIVERSALLY UNIQUE IDENTIFIER",
+        endpoint: "EPAM report portal api url",
+        launch: "execution name",
+        project: "project name",
+        description: "Lunch description(optional)",
+        tags: "tag1 tag2 ..."
+    }    
+});                 
+````
 
 `config.json` should look like this:
 
@@ -41,12 +46,10 @@ let mochaMain = new Mocha({
   "launch": "execution name",
   "project": "project name",
   "description": "Lunch description(optional)",
-  "tags": [
-    "tag1", "tag2"
-  ]
+  "tags": "tag1 tag2"
 }
 ```
 
-By default reporter will use `configOptions` otherwise will try to load file from `configFile`
+By default reporter will use `reporterOptions` otherwise will try to load file from `configFile`
 
 ######WARNING: Test execution will slow down due to sync request to RP 
