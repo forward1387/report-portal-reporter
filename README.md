@@ -8,7 +8,7 @@ It was designed to work with mocha programmatically, in order to be able to para
 
 #### Instalation steps:
 
-` npm install report-portal-reporter`
+`npm install report-portal-reporter`
 
 #### How to use:
 
@@ -50,6 +50,7 @@ let mochaMain = new Mocha({
 }
 ```
 
-By default reporter will use `reporterOptions` otherwise will try to load file from `configFile`
+By default reporter will use `reporterOptions` otherwise will try to load file from `configFile`.
+Add posibility to use environment variables: TOKEN, LUNCH, ENDPOINT, PROJECT and TAGS;
 
 ######WARNING: Test execution will slow down due to sync request to RP 

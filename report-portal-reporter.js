@@ -48,11 +48,11 @@ function RPReporter(runner, options) {
             config = options.reporterOptions.configOptions ? options.reporterOptions.configOptions : require(path.join(process.cwd(), options.reporterOptions.configFile));
         } else {
             config = {
-                token: options.reporterOptions.token,
-                endpoint: options.reporterOptions.endpoint,
-                launch: options.reporterOptions.launch,
-                project: options.reporterOptions.project,
-                tags: (options.reporterOptions.tags || '').split(' ')
+                token: options.reporterOptions.token || process.env.TOKEN,
+                endpoint: options.reporterOptions.endpoint || process.env.ENDPOINT,
+                launch: options.reporterOptions.launch || process.env.LUNCH,
+                project: options.reporterOptions.project || process.env.PROJECT, 
+                tags: ((options.reporterOptions.tags || process.env.TAGS) || '').split(' ')
             }
         }
     } catch (err) {

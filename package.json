@@ -1,6 +1,6 @@
 {
   "name": "report-portal-reporter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "mocha reporter for EPAM Report Portal",
   "main": "report-portal-reporter.js",
   "scripts": {
