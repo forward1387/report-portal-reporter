@@ -2,13 +2,7 @@
 // create mocha instance
 const Mocha = require("mocha");
 let mochaMain = new Mocha({
-    reporter: 'report-portal-reporter',
-    reporterOptions: {
-        token: "",
-        endpoint: "",
-        launch: "",
-        project: ""
-    }
+    reporter: 'report-portal-reporter'
 });
 
 

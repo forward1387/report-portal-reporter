@@ -1,10 +1,11 @@
 {
   "name": "report-portal-reporter",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "mocha reporter for EPAM Report Portal",
   "main": "report-portal-reporter.js",
   "scripts": {
-    "test": "node ./test/main.js"
+    "test": "cross-env RPENABLED=true node ./test/main.js",
+    "test-without":  "node ./test/main.js"
   },
   "author": "Yuriy Oprysk(yuriy.oprysk@gmail.com)",
   "license": "ISC",
@@ -14,7 +15,9 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "cross-env": "^5.2.0",
+    "structured-log": "^0.2.0"
   },
   "repository": {
     "type": "git",

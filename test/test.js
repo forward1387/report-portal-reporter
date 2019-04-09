@@ -12,7 +12,7 @@ describe("first level", function() {
             expect(true).to.be.equal(true);
         });
 
-        it("test 2", function() {
+        xit("test 2", function() {
             expect(true).to.be.equal(true);
         });
 
