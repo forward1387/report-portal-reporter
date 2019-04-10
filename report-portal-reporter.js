@@ -61,7 +61,9 @@ function RPReporter(runner, options) {
     let rpClient;
 
     try {
-        enabled = _.has(process.env, 'RPENABLED');
+        enabled = _.has(process.env, 'RPENABLED') ? (process.env.RPENABLED === 'true') : false;
+        console.log(enabled);
+        console.log('RPENABLED: ' + process.env.RPENABLED);
     } catch (err) {
         console.error(`Failed to load config. Error: ${err}`);
     }
@@ -84,7 +86,7 @@ function RPReporter(runner, options) {
         }catch (err) {
             console.error(`Failed to load config. Error: ${err}`);
         }
-        
+
         rpClient = new RPClient(config);
         description = config.description || "";
     }

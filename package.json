@@ -1,10 +1,10 @@
 {
   "name": "report-portal-reporter",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "mocha reporter for EPAM Report Portal",
   "main": "report-portal-reporter.js",
   "scripts": {
-    "test": "cross-env RPENABLED=true node ./test/main.js",
+    "test": "cross-env RPENABLED=false node ./test/main.js",
     "test-without":  "node ./test/main.js"
   },
   "author": "Yuriy Oprysk(yuriy.oprysk@gmail.com)",
