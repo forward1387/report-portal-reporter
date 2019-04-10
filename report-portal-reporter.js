@@ -35,6 +35,8 @@ var failures = 0;
 var scipped = 0;
 var level = 1;
 
+let description;
+
 let getTabs = (count) => {
     let tabs = '';
     for(let i=0; i < count; i++) {
@@ -63,7 +65,15 @@ function RPReporter(runner, options) {
     } catch (err) {
         console.error(`Failed to load config. Error: ${err}`);
     }
+
+    if (enabled) {
         try {
+            console.log('TOKEN: ' + process.env.RPTOKEN);
+            console.log('ENDPOINT: ' + process.env.RPENDPOINT);
+            console.log('LUNCH: ' + process.env.RPLUNCH);
+            console.log('PROJECT: ' + process.env.RPPROJECT);
+            console.log('TAGS: ' + process.env.RPTAGS);
+
             config = {
                 token: _.has(process.env, 'RPTOKEN') ? process.env.RPTOKEN : '',
                 endpoint: _.has(process.env, 'RPENDPOINT') ? process.env.RPENDPOINT : '',
@@ -74,10 +84,9 @@ function RPReporter(runner, options) {
         }catch (err) {
             console.error(`Failed to load config. Error: ${err}`);
         }
-
-    if (enabled) {
+        
         rpClient = new RPClient(config);
-        let description = config.description || "";
+        description = config.description || "";
     }
 
         runner.on('start', function()  {

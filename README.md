@@ -12,45 +12,8 @@ It was designed to work with mocha programmatically, in order to be able to para
 
 #### How to use:
 
-```javascript
-const Mocha = require("mocha");
-let mochaMain = new Mocha({    
-    reporter: 'mocha-rp-reporter',
-    reporterOptions: {
-        configFile: "path to config.json",
-            }
-});
-```
-OR
-```
-const Mocha = require("mocha");
-let mochaMain = new Mocha({    
-    reporter: 'mocha-rp-reporter',
-    reporterOptions: {
-        token: "UNIVERSALLY UNIQUE IDENTIFIER",
-        endpoint: "EPAM report portal api url",
-        launch: "execution name",
-        project: "project name",
-        description: "Lunch description(optional)",
-        tags: "tag1 tag2 ..."
-    }    
-});                 
-````
+Enable report portal set env variable RPENABLED=true
 
-`config.json` should look like this:
-
-```json
-{
-  "endpoint": "EPAM report portal api url",
-  "token": "UNIVERSALLY UNIQUE IDENTIFIER",
-  "launch": "execution name",
-  "project": "project name",
-  "description": "Lunch description(optional)",
-  "tags": "tag1 tag2"
-}
-```
-
-By default reporter will use `reporterOptions` otherwise will try to load file from `configFile`.
-Add posibility to use environment variables: TOKEN, LUNCH, ENDPOINT, PROJECT and TAGS;
+Add posibility to use environment variables: RPTOKEN, RPLUNCH, RPENDPOINT, RPPROJECT and RPTAGS;
 
 ######WARNING: Test execution will slow down due to sync request to RP 
