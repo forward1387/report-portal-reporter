@@ -92,7 +92,6 @@ function RPReporter(runner, options) {
     }
 
         runner.on('start', function()  {
-            console.log('Tests execution started');
 
             if (!enabled) return;
 
@@ -117,8 +116,6 @@ function RPReporter(runner, options) {
         });
 
         runner.on('end', function(){
-            console.log(`\nRESULTS pass: ${passes} fail: ${failures} skip: ${scipped}`);
-
             if (!enabled) return;
 
             rpClient.finishLaunch(launchId, {
@@ -201,7 +198,6 @@ function RPReporter(runner, options) {
     });
 
     runner.on('pending', function (test) {
-        console.warn(`${getTabs(level)}Test pending: '${test.title}'`);
         scipped++;
         if (!enabled) return;
 
@@ -241,7 +237,6 @@ function RPReporter(runner, options) {
     });
 
     runner.on('fail', (test, err) => {
-        console.error(`${getTabs(level)}Test failed: '${test.title}'`);
         failures++;
         if (!enabled) return;
 
@@ -258,7 +253,6 @@ function RPReporter(runner, options) {
 
     runner.on('pass', function(test) {
         passes++;
-        console.log(`${getTabs(level)}Test passed: '${test.title}'`);
     });
 }
 
